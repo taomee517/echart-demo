@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>E-charts饼图案例</title>
+		<!-- 引入 echarts.js -->
+		<script src="../src/echarts/echarts.min.js"></script>
+		<script src="../src/jquery/jquery.min.js"></script>
+	</head>
+	<body>
+		<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+		<div id="main" style="width: 600px;height:400px;"></div>
+		
+		
+		<script type="text/javascript">
+			var myChart = echarts.init(document.getElementById('main'));
+			var option = {
+				series:[
+					{
+						name:'设备日志',
+						type:'pie',  // 设置图表类型为饼图
+						radius:'55%',// 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+						data:[],
+						//鼠标 hover 的时候突出阴影
+						itemStyle: {
+						    emphasis: {
+						        shadowBlur: 200,
+						        shadowColor: 'rgba(0, 0, 0, 0.5)'
+						    }
+						}
+					}
+				]
+			}
+			$.get('../data/otu-logs.json').done(function(otuData){
+			  myChart.setOption({
+				  series: [{
+					  name: 'OTU',
+					  data: otuData
+				  }]
+			  });
+			});	
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>
+	</body>
+</html>
